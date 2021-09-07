@@ -6,6 +6,7 @@ import java.util.List;
 public class Componente {
     private String nombre;
     private List<Componente> hijos;
+    private int nivel;
 
     public Componente(String nombre) {
         this.nombre = nombre;
@@ -35,5 +36,13 @@ public class Componente {
 
     public boolean tieneHijos(){
         return !this.hijos.isEmpty();
+    }
+
+    public int getNivel() {
+        return nivel;
+    }
+
+    public void setNivel(int nivel) {
+        this.nivel = nivel;
     }
 }

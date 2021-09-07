@@ -2,6 +2,8 @@ package com.potoware.recursividad.ejemplo;
 
 import com.potoware.recursividad.ejemplo.models.Componente;
 
+import java.util.stream.Stream;
+
 public class EjemploRecursividad {
     public static void main(String[] args) {
         Componente pc = new Componente("Gabinente PC Dell");
@@ -33,5 +35,23 @@ public class EjemploRecursividad {
                 .addComponente(placaMadre)
                 .addComponente(new Componente("Teclado"))
                 .addComponente(new Componente("Mouse"));
+
+        metodoRecursivoStream(pc,0).forEach(c-> System.out.println("\t".repeat(c.getNivel()) +c.getNombre()));
+    }
+
+    public static Stream<Componente> metodoRecursivoStream(Componente c, int nivel){
+        c.setNivel(nivel);
+        return Stream.concat(Stream.of(c),
+                c.getHijos().stream()
+                        .flatMap(hijo-> metodoRecursivoStream(hijo,nivel+1)));
+
+    }
+    public static void metodoRecursivo(Componente c, int nivel){
+        System.out.println("\t".repeat(nivel) + c.getNombre());
+        if(c.tieneHijos()){
+            for(Componente hijo: c.getHijos()){
+                    metodoRecursivo(hijo, nivel +1);
+            }
+        }
     }
 }
